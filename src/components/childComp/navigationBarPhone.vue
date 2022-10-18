@@ -49,7 +49,7 @@ let openInput = () => {
           </ul>
       </div>
     </div>
-    <div v-show="isOpenInput" class="search">
+    <div v-show="isShowMore && isOpenInput" class="search">
       <img src="../../assets/home/svg/search.svg" alt="">
       <input type="text">
     </div>
@@ -68,6 +68,7 @@ let openInput = () => {
     align-items: center;
     box-sizing: border-box;
     padding: 0.5rem;
+    z-index: 100;
     .name {
       position: absolute;
       left: 50%;
