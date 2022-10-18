@@ -3,6 +3,8 @@ import navigationBarPhone from './childComp/navigationBarPhone.vue';
 import ArticlePhone from './childComp/articlePhone/index.vue';
 import NavigationBarPC from './childComp/navigationBarPC.vue';
 import ArticlePC from './childComp/articlePC/index.vue'
+import Footer from './childComp/footer.vue'
+
 
 </script>
 
@@ -23,6 +25,7 @@ import ArticlePC from './childComp/articlePC/index.vue'
         <div class="pc">
           <ArticlePC ></ArticlePC>
         </div>
+        <Footer sentence = "绝知此事要躬行"></Footer>
       </main>
   </body>
 </template>
