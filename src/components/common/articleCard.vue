@@ -1,19 +1,24 @@
 <script setup>
   import { ref } from 'vue'
+
+  let props = defineProps(['articleInfo'])
+
 </script>
 
 <template>
+<div v-if="props.articleInfo">
   <div class="article">
-    <img src="../../assets/Rectangle 4.png" alt="">
-    <div class="date">July 2022</div>
+    <img :src="articleInfo.titleImg" alt="">
+    <div class="date">{{articleInfo.date.substring(0, 16)}}</div>
     <div class="title">
-      什么是Vue？它做了什么？从Vue生命周期来了解Vue什么是Vue？它做了什么？从Vue生命周期来了解Vue
+      {{articleInfo.title}}
     </div>
     <div class="introduction">
-      Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
-      incididunt aliquip deserunt reprehenderit elit laborum.
+      {{articleInfo.introduction}}
     </div>
   </div>
+</div>
+
 </template>
 
 <style lang='scss' scoped>

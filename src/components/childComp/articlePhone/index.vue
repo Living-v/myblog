@@ -1,13 +1,15 @@
 <script setup>
+import { ref, defineProps } from 'vue'
 import articleCard from '../../common/articleCard.vue'
+
+const props = defineProps(['article'])
+
 
 </script>
 
 <template>
   <div class="article_box">
-    <div v-for="(item, index) in 5" :key="index">
-      <articleCard></articleCard>
-    </div>
+    <articleCard v-for="(item, index) in props.article" :articleInfo="item"></articleCard>
   </div>
 </template>
 

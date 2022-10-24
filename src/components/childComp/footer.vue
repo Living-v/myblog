@@ -1,15 +1,16 @@
 <script setup>
-  import { ref, defineProps } from 'vue'
+  import { ref } from 'vue'
+  import {getMotto} from '../../network/home'
 
-  const props =  defineProps(['sentence'])
-  console.log(props);
-  // sentence.value = 
-  
+  let Motto = ref(null)
+  getMotto().then(res =>{
+    Motto.value = res.motto
+  })
 </script>
 
 <template>
   <div class="footer">
-    「  {{props.sentence}} 」
+    「  {{Motto}} 」
   </div>
 </template>
 

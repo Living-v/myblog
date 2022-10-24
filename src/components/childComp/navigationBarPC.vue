@@ -1,9 +1,17 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, defineEmits } from 'vue'
+
+const emit = defineEmits(['getCurType'])
 
 let isTypeClick = ref(0)
 let openType = () => {
   isTypeClick.value = 1 ^ isTypeClick.value
+}
+
+let curType = ref(null)
+const changeType = (e)=>{
+  curType.value = e
+  emit('getCurType', curType)
 }
 </script>
 
@@ -14,9 +22,9 @@ let openType = () => {
       &nbsp; <span style="display: flex; align-items: center;">Living</span>
     </div>
     <div class="navigation-bar">
-        <div class="navigation-item"><span>开发技术</span></div>
-        <div class="navigation-item"><span>技术资讯</span></div>
-        <div class="navigation-item"><span>生活分享</span></div>
+        <div class="navigation-item" @click="changeType(1)"><span>开发技术</span></div>
+        <div class="navigation-item" @click="changeType(2)"><span>技术资讯</span></div>
+        <div class="navigation-item" @click="changeType(3)"><span>生活分享</span></div>
         <div class="navigation-item show_more_item">
         <span @click="openType" style="display: flex;">
           技术类别
@@ -26,10 +34,10 @@ let openType = () => {
           </span>
         </span>
           <ul class="animate__animated animate__fadeInDown more" v-show="isTypeClick">
-            <li>JavaScript</li>
-            <li>CSS</li>
-            <li>框架 组件</li>
-            <li>网络</li>
+            <li @click="changeType(4)">JavaScript</li>
+            <li @click="changeType(5)">CSS</li>
+            <li @click="changeType(6)">框架 组件</li>
+            <li @click="changeType(7)">网络</li>
           </ul>
       </div>
     </div>

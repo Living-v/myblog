@@ -5,6 +5,53 @@ import NavigationBarPC from './childComp/navigationBarPC.vue';
 import ArticlePC from './childComp/articlePC/index.vue'
 import Footer from './childComp/footer.vue'
 
+import {ref} from 'vue'
+
+import {getArticle} from '../network/home'
+
+let curArticle = ref(null)
+
+getArticle('/getDevTec').then(res =>{
+  curArticle.value = res
+})
+
+let curType = ref(1)
+const getCurType = (e)=>{
+  if(curType.value === e.value){
+    return
+  }
+  curType.value = e.value
+  console.log(e.value);
+  if(e.value === 1){
+    getArticle('/getDevTec').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 2){
+    getArticle('/getDevInfo').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 3){
+    getArticle('/getLifeShare').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 4){
+    getArticle('/getJavaScript').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 5){
+    getArticle('/getCSS').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 6){
+    getArticle('/getFrame').then(res =>{
+      curArticle.value = res
+    })
+  }else if(e.value === 7){
+    getArticle('/getNetwork').then(res =>{
+      curArticle.value = res
+    })
+  }
+}
 
 </script>
 
@@ -12,20 +59,20 @@ import Footer from './childComp/footer.vue'
   <body>
       <header>
         <div class="phone">
-          <navigationBarPhone></navigationBarPhone>
+          <navigationBarPhone @getCurType="getCurType"></navigationBarPhone>
         </div>
         <div class="pc">
-          <NavigationBarPC></NavigationBarPC>
+          <NavigationBarPC @getCurType="getCurType"></NavigationBarPC>
         </div>
       </header>
       <main>
         <div class="phone">
-          <ArticlePhone ></ArticlePhone>
+          <ArticlePhone :article="curArticle"></ArticlePhone>
         </div>
         <div class="pc">
-          <ArticlePC ></ArticlePC>
+          <ArticlePC :article="curArticle"></ArticlePC>
         </div>
-        <Footer sentence = "绝知此事要躬行"></Footer>
+        <Footer></Footer>
       </main>
   </body>
 </template>
