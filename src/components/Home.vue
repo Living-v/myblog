@@ -11,7 +11,7 @@ import {getArticle} from '../network/home'
 
 let curArticle = ref(null)
 
-getArticle('/getDevTec').then(res =>{
+getArticle('开发技术').then(res =>{
   curArticle.value = res
 })
 
@@ -21,33 +21,33 @@ const getCurType = (e)=>{
     return
   }
   curType.value = e.value
-  console.log(e.value);
   if(e.value === 1){
-    getArticle('/getDevTec').then(res =>{
+    getArticle('开发技术').then(res =>{
       curArticle.value = res
     })
   }else if(e.value === 2){
-    getArticle('/getDevInfo').then(res =>{
+    getArticle('技术资讯').then(res =>{
       curArticle.value = res
     })
   }else if(e.value === 3){
-    getArticle('/getLifeShare').then(res =>{
+    getArticle('生活分享').then(res =>{
+      console.log(res);
       curArticle.value = res
     })
   }else if(e.value === 4){
-    getArticle('/getJavaScript').then(res =>{
+    getArticle('JavaScript').then(res =>{
       curArticle.value = res
     })
   }else if(e.value === 5){
-    getArticle('/getCSS').then(res =>{
+    getArticle('CSS').then(res =>{
       curArticle.value = res
     })
   }else if(e.value === 6){
-    getArticle('/getFrame').then(res =>{
+    getArticle('框架 组件').then(res =>{
       curArticle.value = res
     })
   }else if(e.value === 7){
-    getArticle('/getNetwork').then(res =>{
+    getArticle('网络').then(res =>{
       curArticle.value = res
     })
   }
@@ -67,10 +67,10 @@ const getCurType = (e)=>{
       </header>
       <main>
         <div class="phone">
-          <ArticlePhone :article="curArticle"></ArticlePhone>
+          <ArticlePhone :article="curArticle" v-if="curArticle"></ArticlePhone>
         </div>
         <div class="pc">
-          <ArticlePC :article="curArticle"></ArticlePC>
+          <ArticlePC :article="curArticle" v-if="curArticle"></ArticlePC>
         </div>
         <Footer></Footer>
       </main>

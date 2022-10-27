@@ -1,15 +1,18 @@
 <script setup>
   import articleCard from "../../common/articleCard.vue"
-  import { ref, defineProps, watch, watchEffect } from 'vue'
+  import { ref, defineProps, watch} from 'vue'
+  import { useRouter } from "vue-router"
+  const router = useRouter()
 
   const props = defineProps(['article'])
 
-  let allArticle = ref(props.article)  
+  let allArticle = ref(props.article)
 
   watch(
     ()=>props.article,
     ()=>{
       allArticle.value = props.article
+      firstArticle.value = allArticle.value[0]
       changeArticles(7)
       canPrevious.value = false
       canNext.value = true
@@ -19,7 +22,6 @@
       deep:true
     }
   )
-
 
   let firstArticle = ref(allArticle.value[0])
   let curNumb = 7
@@ -50,18 +52,36 @@
     }
     changeArticles(curNumb)
   }
+
+  const openFirstArticle = ()=>{
+    router.push({
+      path:"/article",
+      query:{
+        Id:firstArticle.value._id
+      }
+    })
+  }
+
+  const openArticle = (item)=>{
+    router.push({
+      path:"/article",
+      query:{
+        Id:item._id
+      }
+    })
+  }
 </script>
 
 <template>
   <div class="lastArticle">
-    <img class="lastArticle_img" :src="firstArticle.titleImg" alt="">
+    <img @click="openFirstArticle" class="lastArticle_img" :src="firstArticle ? firstArticle.titleImg : '../../../assets/cover.png'" alt="">
     <div class="lastArticle_right">
-      <div class="date">{{firstArticle.date.substring(0, 16)}}</div>
-      <div class="title">
-        {{firstArticle.title}}
+      <div class="date">{{firstArticle? firstArticle.date.substring(0, 16) : '未知'}}</div>
+      <div class="title" @click="openFirstArticle">
+        {{firstArticle? firstArticle.title : '文章标题丢失'}}
       </div>
       <div class="introduction">
-        {{firstArticle.introduction}}
+        {{firstArticle? firstArticle.introduction : '文章简介丢失'}}
       </div>
     </div>
   </div>
@@ -72,7 +92,7 @@
     <div :class="['arrow', 'next', canNext?'':'noNext']" @click="next">
       <svg t="1666062678186" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2448" width="28" height="16"><path d="M828.996915 430.121165l0 111.544469L717.447882 541.665634l0 111.542422L605.898842 653.208056l0 111.544469L494.350827 764.752525 494.350827 653.208069 382.801787 653.208069 382.801787 541.665647 271.253771 541.665647 271.253771 430.121178 159.704732 430.121178 159.704732 207.033263l111.549039 0 0 111.543446 111.548016 0 0 111.544469 111.549039 0 0 111.544469 111.548016 0L605.898842 430.121178l111.549039 0L717.447882 318.576709l111.549039 0L828.996921 207.033263l111.549039 0 0 223.087914L828.996921 430.121178z" p-id="2449"></path></svg>
     </div>
-    <articleCard class="articleCard" v-for="(item, index) in curArticles" :articleInfo="item"></articleCard>
+    <articleCard class="articleCard" v-for="(item, index) in curArticles" v-if="curArticles" :articleInfo="item" @click="openArticle(item)"></articleCard>
   </div>
 </template>
 
@@ -88,6 +108,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    cursor: pointer;
   }
   .lastArticle_right{
     width: 40%;
